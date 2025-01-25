@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Portfolio Showcase</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            padding: 10px 50px;
+        }
+        .portfolio-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+            padding: 0 5%;
+        }
+        .project-details {
+            position: absolute;
+            left: 5%;
+            z-index: 10;
+            max-width: 50%;
+        }
+        .project-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        .project-description {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        .project-technologies {
+            font-size: 0.9rem;
+            color: #888;
+        }
+        .project-image {
+            max-width: 30%;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
+        }
+        .project-image:hover {
+            transform: scale(1.02);
+        }
+        .navigation-arrows {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+        .arrow {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: none;
+            font-size: 2rem;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .arrow:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .project-link {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .portfolio-container {
+                flex-direction: column;
+                justify-content: center;
+                padding: 5%;
+            }
+            .project-details {
+                position: static;
+                max-width: 100%;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            .project-image {
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+            .project-title {
+                font-size: 1.8rem;
+            }
+            .project-description {
+                font-size: 1rem;
+            }
+            .navigation-arrows {
+                position: static;
+                transform: none;
+                justify-content: center;
+                margin-top: 20px;
+            }
+            .arrow {
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="portfolio-container">
+        <div class="project-details">
+            <h1 class="project-title" id="projectTitle">Flower Astana</h1>
+            <p class="project-description" id="projectDescription">Букеты по выгодным Ценам с быстрой доставкой от 60 мин.</p>
+            <a href="#" class="project-link" id="projectWebsite" target="_blank">Посетить сайт</a>
+            <p class="project-technologies" id="projectTech">Технологии: HTML, CSS, PHP</p>
+        </div>
+        
+        <img src="" class="project-image" id="projectImage" alt="Project Screenshot">
+        
+        <div class="navigation-arrows">
+            <button class="arrow" id="prevProject">←</button>
+            <button class="arrow" id="nextProject">→</button>
+        </div>
+    </div>
+
+    <script>
+        const projects = [
+            {
+                title: "Flower Astana",
+                description: "Букеты по выгодным Ценам с быстрой доставкой от 60 мин.",
+                website: "https://flower-astana.kz/",
+                image: "https://api.pikwy.com/web/6794e4fdb689a429be085ab2.jpg",
+                technologies: "HTML, CSS, PHP"
+            },
+            {
+                title: "Cveты Алматы",
+                description: "Rossalle. Доступные цены на цветы по всему Казахстану.",
+                website: "https://cvetyvalmaty.kz/",
+                image: "https://api.pikwy.com/web/6794e6e0deb22928d00b6b42.jpg",
+                technologies: "React, Node.js"
+            },
+            {
+                title: "RA Group",
+                description: "Профессиональные решения для бизнеса",
+                website: "https://ragroup.org/",
+                image: "https://api.pikwy.com/web/6794e6a519be223dc63c5290.jpg",
+                technologies: "WordPress, JavaScript"
+            },
+            {
+                title: "Flagman Online",
+                description: "Домашнее обучение в г. Астана",
+                website: "https://flagmanonline.edu.kz/",
+                image: "https://api.pikwy.com/web/6794e721a1417f2a0e73dfe3.png",
+                technologies: "Vue.js, Laravel"
+            },
+            {
+                title: "Life Story",
+                description: "Персональные истории и летописи",
+                website: "https://life-story.kyiv.ua/",
+                image: "https://api.pikwy.com/web/6794e85275177d72c2028408.png",
+                technologies: "Next.js, TypeScript"
+            }
+        ];
+
+        let currentProjectIndex = 0;
+
+        function updateProjectDetails() {
+            const project = projects[currentProjectIndex];
+            document.getElementById('projectTitle').textContent = project.title;
+            document.getElementById('projectDescription').textContent = project.description;
+            document.getElementById('projectWebsite').href = project.website;
+            document.getElementById('projectImage').src = project.image;
+            document.getElementById('projectTech').textContent = `Технологии: ${project.technologies}`;
+        }
+
+        document.getElementById('nextProject').addEventListener('click', () => {
+            currentProjectIndex = (currentProjectIndex + 1) % projects.length;
+            updateProjectDetails();
+        });
+
+        document.getElementById('prevProject').addEventListener('click', () => {
+            currentProjectIndex = (currentProjectIndex - 1 + projects.length) % projects.length;
+            updateProjectDetails();
+        });
+
+        // Initial load
+        updateProjectDetails();
+    </script>
+</body>
+</html>
